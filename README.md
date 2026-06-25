@@ -47,6 +47,9 @@ The cleaned data is stored as JSONL files with chat-style messages:
 
 Currently completed:
 
-* Dataset inspection
-* Data preparation script
-* Clean train/test JSONL files
+- Dataset inspection
+- Data preparation script
+- Clean train/test JSONL files
+- Qwen tokenizer inspection
+- Chat template analysis
+- Qwen-formatted SFT training dataset
