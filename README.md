@@ -53,3 +53,4 @@ Currently completed:
 - Qwen tokenizer inspection
 - Chat template analysis
 - Qwen-formatted SFT training dataset
+- SFT dataset inspection (tokenization, padding, attention masks, and labels)
