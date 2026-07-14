@@ -83,7 +83,7 @@ After formatting with the Qwen chat template, each training example becomes a si
 - [x] Data preparation
 - [x] Chat template inspection
 - [x] Tokenizer inspection
-- [ ] Forward pass inspection
+- [x] Forward pass inspection
 - [x] Loss inspection
 - [ ] Supervised fine-tuning
 - [ ] Evaluation
