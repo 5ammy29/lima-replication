@@ -1,30 +1,62 @@
 # LIMA Small-Scale Replication
 
-A small experiment to understand the idea behind LIMA using a tiny model and supervised fine-tuning.
+A small-scale replication of the ideas presented in the LIMA paper using a lightweight open-source language model.
+
+The goal of this project is to understand the complete supervised fine-tuning pipeline by implementing and inspecting each stage instead of treating the training process as a black box.
+
+---
 
 ## Paper
 
-This project is inspired by:
+This project is based on:
 
 **LIMA: Less Is More for Alignment**
-Paper: https://arxiv.org/abs/2305.11206
+
+https://arxiv.org/abs/2305.11206
+
+---
 
 ## Goal
 
-The original LIMA paper studies whether a pretrained language model can become more helpful through supervised fine-tuning on a small number of high-quality examples.
+The original LIMA paper studies whether a pretrained language model can become more helpful through supervised fine-tuning on a small number of high-quality instruction-following examples.
 
-This repo is not a full reproduction of the paper. It is a small learning-focused replication that prepares the LIMA data and builds toward training a tiny model with SFT.
+This repository is not a reproduction of the original experiments. Instead, it is a learning-focused implementation that follows the same pipeline on a much smaller scale while examining each stage in detail.
+
+---
 
 ## Current Scope
 
-* Inspect the LIMA dataset
-* Convert raw conversations into chat-style JSONL format
-* Prepare train and test data for supervised fine-tuning
-* Later: train a small SFT model and compare it with the base model
+- Inspect the original LIMA dataset
+- Convert conversations into chat-style JSONL
+- Prepare train and test datasets
+- Format conversations using the Qwen chat template
+- Inspect tokenization and batching
+- Understand the transformer forward pass
+- Build the supervised fine-tuning pipeline
+
+---
+
+## Repository Structure
+
+```
+data/
+├── train_data.jsonl
+└── test_data.jsonl
+
+notebooks/
+├── inspect_qwen_dataset.ipynb
+├── inspect_tokenizer.ipynb
+├── inspect_forward_pass.ipynb
+
+scripts/
+└── prepare_data.py
+```
+
+---
 
 ## Dataset Format
 
-The cleaned data is stored as JSONL files with chat-style messages:
+The processed dataset is stored as JSONL.
 
 ```json
 {
@@ -37,20 +69,38 @@ The cleaned data is stored as JSONL files with chat-style messages:
       "role": "assistant",
       "content": "Answer here"
     }
-  ],
-  "source": "stackexchange",
-  "num_turns": 2
+  ]
 }
 ```
 
-## Status
+After formatting with the Qwen chat template, each training example becomes a single text sequence used for supervised fine-tuning.
 
-Currently completed:
+---
 
-- Dataset inspection
-- Data preparation script
-- Clean train/test JSONL files
-- Qwen tokenizer inspection
-- Chat template analysis
-- Qwen-formatted SFT training dataset
-- SFT dataset inspection (tokenization, padding, attention masks, and labels)
+## Progress
+
+- [x] Dataset inspection
+- [x] Data preparation
+- [x] Chat template inspection
+- [x] Tokenizer inspection
+- [x] Forward pass inspection
+- [ ] Loss inspection
+- [ ] Supervised fine-tuning
+- [ ] Evaluation
+
+---
+
+## Planned Work
+
+- Complete loss inspection
+- Train a Qwen 0.5B model using supervised fine-tuning
+- Compare responses before and after fine-tuning
+- Evaluate instruction-following behaviour
+
+---
+
+## References
+
+- LIMA Paper — https://arxiv.org/abs/2305.11206
+- Hugging Face Transformers — https://github.com/huggingface/transformers
+- Qwen2.5 Models — https://huggingface.co/Qwen
