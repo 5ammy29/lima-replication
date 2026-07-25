@@ -1,2 +1,5 @@
 .vscode
 outputs/inspection_adapter
+outputs/sft_qwen/checkpoint-100
+outputs/sft_qwen/checkpoint-195
+outputs/sft_qwen/final_adapter

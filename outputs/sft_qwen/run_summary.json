@@ -1,0 +1,18 @@
+{
+  "model_name": "Qwen/Qwen2.5-0.5B-Instruct",
+  "train_examples": 1030,
+  "eval_examples": 300,
+  "max_length": 1024,
+  "num_train_epochs": 3.0,
+  "learning_rate": 0.0002,
+  "train_batch_size": 2,
+  "gradient_accumulation_steps": 8,
+  "effective_batch_size": 16,
+  "lora": {
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05
+  },
+  "eval_loss": 1.3418169021606445,
+  "perplexity": 3.8259886411683857
+}
