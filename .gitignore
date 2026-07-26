@@ -1,4 +1,6 @@
+__pycache__
 .vscode
+.DS_Store
 outputs/inspection_adapter
 outputs/sft_qwen/checkpoint-100
 outputs/sft_qwen/checkpoint-195
