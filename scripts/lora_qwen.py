@@ -29,20 +29,23 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default="Qwen/Qwen2.5-0.5B-Instruct",
     )
+
     parser.add_argument(
         "--train-file",
         type=str,
-        default="data/train_data.jsonl",
+        default="data/train_data_900.jsonl",
     )
+
     parser.add_argument(
-        "--test-file",
+        "--eval-file",
         type=str,
-        default="data/test_data.jsonl",
+        default="data/eval_data_130.jsonl",
     )
+
     parser.add_argument(
         "--output-dir",
         type=str,
-        default="outputs/sft_qwen",
+        default="outputs/sft_qwen_900_130",
     )
 
     parser.add_argument("--max-length", type=int, default=1024)
@@ -102,25 +105,26 @@ def set_seed(seed: int) -> None:
 
 def validate_files(args: argparse.Namespace) -> None:
     train_path = Path(args.train_file)
-    test_path = Path(args.test_file)
+    eval_path = Path(args.eval_file)
 
     if not train_path.exists():
         raise FileNotFoundError(
             f"Training file does not exist: {train_path}"
         )
 
-    if not test_path.exists():
+    if not eval_path.exists():
         raise FileNotFoundError(
-            f"Test file does not exist: {test_path}"
+            f"Evaluation file does not exist: {eval_path}"
         )
 
 
 def load_lima_dataset(args: argparse.Namespace) -> DatasetDict:
+
     dataset = load_dataset(
         "json",
         data_files={
             "train": args.train_file,
-            "test": args.test_file,
+            "eval": args.eval_file,
         },
     )
 
@@ -146,9 +150,9 @@ def load_lima_dataset(args: argparse.Namespace) -> DatasetDict:
     if args.max_eval_samples is not None:
         eval_count = min(
             args.max_eval_samples,
-            len(dataset["test"]),
+            len(dataset["eval"]),
         )
-        dataset["test"] = dataset["test"].select(
+        dataset["eval"] = dataset["eval"].select(
             range(eval_count)
         )
 
@@ -395,7 +399,7 @@ def main() -> None:
     print("-" * 100)
     print(f"Model: {args.model_name}")
     print(f"Train file: {args.train_file}")
-    print(f"Test file: {args.test_file}")
+    print(f"Evaluation file: {args.eval_file}")
     print(f"Output directory: {args.output_dir}")
 
     if torch.cuda.is_available():
@@ -407,12 +411,14 @@ def main() -> None:
         print("CUDA device: None")
 
     dataset = load_lima_dataset(args)
+    assert len(dataset["train"]) == 900
+    assert len(dataset["eval"]) == 130
 
     print()
     print("Dataset")
     print("-" * 100)
     print("Training examples:", len(dataset["train"]))
-    print("Evaluation examples:", len(dataset["test"]))
+    print("Evaluation examples:", len(dataset["eval"]))
     print("Columns:", dataset["train"].column_names)
 
     tokenizer = load_tokenizer(
@@ -443,7 +449,7 @@ def main() -> None:
         model=model,
         args=training_arguments,
         train_dataset=tokenized_dataset["train"],
-        eval_dataset=tokenized_dataset["test"],
+        eval_dataset=tokenized_dataset["eval"],
         data_collator=data_collator,
     )
 
@@ -473,9 +479,9 @@ def main() -> None:
         train_size=len(
             tokenized_dataset["train"]
         ),
-        eval_size=len(
-            tokenized_dataset["test"]
-        ),
+    eval_size=len(
+        tokenized_dataset["eval"]
+    ),
     )
 
     print()

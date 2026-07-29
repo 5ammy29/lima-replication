@@ -72,12 +72,12 @@ def train(
 
     train_file_path = (
         f"{REMOTE_PROJECT_DIRECTORY}"
-        "/data/train_data.jsonl"
+        "/data/train_data_900.jsonl"
     )
 
-    test_file_path = (
+    eval_file_path = (
         f"{REMOTE_PROJECT_DIRECTORY}"
-        "/data/test_data.jsonl"
+        "/data/eval_data_130.jsonl"
     )
 
     output_directory = (
@@ -95,8 +95,8 @@ def train(
         "--train-file",
         train_file_path,
 
-        "--test-file",
-        test_file_path,
+        "--eval-file",
+        eval_file_path,
 
         "--output-dir",
         output_directory,
