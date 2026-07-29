@@ -6,3 +6,5 @@ outputs/sft_qwen/checkpoint-100
 outputs/sft_qwen/checkpoint-195
 outputs/sft_qwen/final_adapter
 scripts/evaluate.py
+outputs/sft_qwen/checkpoint-50
+outputs/sft_qwen/checkpoint-171
