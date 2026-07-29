@@ -1,0 +1,14 @@
+{
+  "model_type": "base",
+  "model_name": "Qwen/Qwen2.5-0.5B-Instruct",
+  "eval_file": "/root/lima/data/eval_data_130.jsonl",
+  "eval_examples": 130,
+  "max_length": 1024,
+  "eval_batch_size": 2,
+  "loss_masking": "full_sequence_except_padding",
+  "eval_loss": 2.638059616088867,
+  "perplexity": 13.986038976339698,
+  "eval_runtime": 5.977,
+  "eval_samples_per_second": 21.75,
+  "eval_steps_per_second": 10.875
+}
